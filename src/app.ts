@@ -1,9 +1,11 @@
 import express from 'express';
 import * as bodyParser from 'body-parser';
 import { ExtendendRequest } from './utils/utils';
-import { router } from './utils/router';
+import { Routes } from './utils/router';
 import { AddressInfo } from 'net';
 import mongoose from "mongoose";
+import { AuthController } from './auth/auth.controller';
+import cookieParser from 'cookie-parser';
 
 class App {
     public app: express.Application;
@@ -32,11 +34,17 @@ class App {
                 }
             }
         }));
+
+        this.app.use(cookieParser());
     }
 
     private initRouter = () => {
-        this.app.use("/", router);
+        const authController = new AuthController();
+        const routes = new Routes();
+        this.app.use("/", authController.router);
+        this.app.use("/", routes.router);
     }
+
     private connectToTheDatabase() {
         const {
             MONGO_USER,

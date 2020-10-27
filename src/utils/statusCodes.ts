@@ -1,7 +1,7 @@
 // Handle HTTP Status Codes
 
 // Codes to be handled
-type Codes = 200 | 400 | 403 | 404 | 405 | 429 | 500;
+type Codes = 200 | 400 | 401 | 403 | 404 | 405 | 429 | 500;
 
 interface StatusCode {
     json: {
@@ -28,6 +28,13 @@ export const statusCodes: StatusCodes = {
             statusCode: 400,
             statusMessage: "400 Bad Request",
             message: "Server cannot or will not process the request."
+        }
+    },
+    401: {
+        json: {
+            statusCode: 401,
+            statusMessage: "401 Unauthorized",
+            message: "The request has not been applied because it lacks valid authentication credentials for the target resource."
         }
     },
     403: {
