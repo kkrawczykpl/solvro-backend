@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { statusCodes } from '../utils/statusCodes';
-import { DataStoredInToken } from "../utils/dataStoredInToken.interface";
+import { DataStoredInToken } from "../interfaces/dataStoredInToken.interface";
 import userModel from "../users/user.model";
 import { RequestWithUser } from '../utils/requestWithUser';
 

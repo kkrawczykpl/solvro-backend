@@ -6,8 +6,8 @@ import CreateUserDto from '../users/user.dto';
 import userModel from '../users/user.model';
 import LoginDto from './login.dto';
 import User from '../users/user.interface';
-import { TokenData } from '../utils/tokenData.interface';
-import { DataStoredInToken } from '../utils/dataStoredInToken.interface';
+import { TokenData } from '../interfaces/tokenData.interface';
+import { DataStoredInToken } from '../interfaces/dataStoredInToken.interface';
 import * as jwt from 'jsonwebtoken';
 
 class AuthController {

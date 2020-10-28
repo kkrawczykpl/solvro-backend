@@ -1,5 +1,3 @@
-import { Request } from 'express';
-import User from '../users/user.interface';
 import { ExtendendRequest } from './utils';
 
 

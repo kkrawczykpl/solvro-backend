@@ -23,4 +23,8 @@ Jest to projekt tworzony w ramach rekrutacji do Koła Naukowego Politechniki Wro
 >
 [ via: @Solvro/rekrutacja ](https://github.com/Solvro/rekrutacja)
 
+*** Spec ***
+
+* Variable name - lowerCamelCase, PascalCase or UPPER_CASE
+
 

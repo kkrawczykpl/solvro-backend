@@ -1,7 +1,7 @@
 import express from 'express';
 import * as bodyParser from 'body-parser';
 import { ExtendendRequest } from './utils/utils';
-import { Routes } from './utils/router';
+import { Routes } from './routes';
 import { AddressInfo } from 'net';
 import mongoose from "mongoose";
 import { AuthController } from './auth/auth.controller';
@@ -19,7 +19,7 @@ class App {
     }
 
     public listen = () => {
-        const server = this.app.listen(+(process.env.PORT || 1337), '0.0.0.0', () => {
+        const server = this.app.listen(+(process.env.PORT || 1337), (process.env.BASE_URL || '0.0.0.0'), () => {
             const { port, address } = server.address() as AddressInfo;
             console.log(`Server listening on: http://${address}:${+port}`);
         });

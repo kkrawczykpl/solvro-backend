@@ -28,6 +28,23 @@ class StopsService {
         const uniqueNames = [...new Map(stopNames.map(stop => [stop.name, stop])).values()];
         return uniqueNames;
     }
+    /**
+     * Find Stop name by id
+     *
+     * @param id - number
+     * @returns string if stop exists otherwise undefined.
+     */
+    async findStopNameById(id: number): Promise<string | undefined> {
+        const nodes = await this.findAll();
+        const stop = nodes.find(s => s.id === id);
+        return stop ? stop.stop_name : undefined;
+    }
+
+    async findStopsByName(name: string): Promise<Node[]> {
+        const nodes: Node[] = await this.findAll();
+        const stops: Node[] = nodes.filter(s => s.stop_name === name);
+        return stops;
+    }
 }
 
 export { StopsService };

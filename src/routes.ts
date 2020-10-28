@@ -1,7 +1,9 @@
 import { Response, Request, Router } from 'express';
-import { authMiddleware } from '../middleware/auth.middleware';
-import { StopsService } from '../stops/stops.service';
-import { statusCodes } from './statusCodes';
+import { authMiddleware } from './middleware/auth.middleware';
+import { PathService } from './stops/path.service';
+import { StopsService } from './stops/stops.service';
+import { statusCodes } from './utils/statusCodes';
+
 
 class Routes {
     public router = Router();
@@ -32,7 +34,17 @@ class Routes {
                 const stops = await stopsService.findAllNames();
                 res.status(200).json( stops );
             } catch (error) {
-            res.send(404).json(statusCodes[404].json)
+            res.status(404).json(statusCodes[404].json)
+            }
+        });
+
+        this.router.get('/paths', async (req: Request, res: Response) => {
+            try {
+                const stopsService = new PathService();
+                const stops = await stopsService.findAll();
+                res.status(200).json( stops );
+            } catch (error) {
+            res.status(404).json(statusCodes[404].json)
             }
         });
 
@@ -43,9 +55,13 @@ class Routes {
          * @query target - Stop where the path ends
          * @returns JSON containing stops and total distance
          */
-        this.router.get('/path/:source/:target', authMiddleware, (req: Request, res: Response) => {
+        this.router.get('/path/:source/:target', async (req: Request, res: Response) => {
+            const source: string = req.params.source;
+            const target: string = req.params.target;
             try {
-                res.status(200).json( statusCodes[200].json );
+                const pathService = new PathService();
+                const paths = await pathService.findPaths(source, target);
+                res.status(200).json(paths);
             } catch (error) {
             res.send(404).json(statusCodes[404].json)
             }
