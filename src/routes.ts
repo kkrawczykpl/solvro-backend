@@ -38,16 +38,6 @@ class Routes {
             }
         });
 
-        this.router.get('/paths', async (req: Request, res: Response) => {
-            try {
-                const stopsService = new PathService();
-                const stops = await stopsService.findAll();
-                res.status(200).json( stops );
-            } catch (error) {
-            res.status(404).json(statusCodes[404].json)
-            }
-        });
-
         /**
          * GET /path: Returns list of stops in path and total distance.
          *
@@ -64,6 +54,14 @@ class Routes {
                 res.status(200).json(paths);
             } catch (error) {
             res.send(404).json(statusCodes[404].json)
+            }
+        });
+
+        this.router.get('/secured', authMiddleware, async (req: Request, res: Response) => {
+            try {
+                res.status(200).json( statusCodes[200].json );
+            } catch (error) {
+            res.status(404).json(statusCodes[404].json)
             }
         });
     }

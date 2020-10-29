@@ -1,0 +1,222 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Solvro Backend",
+      "version": "1.0.0"
+    },
+    "paths": {
+      "/": {
+        "get": {
+          "summary": "Basic routes to confirm that Backend works correctly.",
+          "responses": {
+            "200": {
+              "description": "JSON containing 200 status code."
+            }
+          }
+        }
+      },
+      "/ping": {
+        "get": {
+          "summary": "Basic routes to confirm that Backend works correctly.",
+          "responses": {
+            "200": {
+              "description": "JSON containing 200 status code."
+            }
+          }
+        }
+      },
+      "/stops": {
+        "get": {
+          "summary": "Returns list of stops in Solvro City.",
+          "responses": {
+            "200": {
+              "description": "JSON array of checklists' names.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "example": [
+                    {
+                      "name": "Przystanek Zdenerwowany frontend developer"
+                    },
+                    {
+                      "name": "Przystanek Cudowny student PWr"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "/path/{source}/{target}": {
+        "get": {
+          "summary": "Returns list of stops in path and total distance.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "source",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "description": "Stop where the path begins"
+            },
+            {
+              "in": "path",
+              "name": "target",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "description": "Stop where the path ends"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "JSON containing status, stops and total distance",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object"
+                  },
+                  "example": {
+                    "status": true,
+                    "from": 1,
+                    "to": 3,
+                    "path": {
+                      "distance": 13,
+                      "stops": [
+                        {
+                          "name": "Przystanek 1"
+                        },
+                        {
+                          "name": "Przystanek 2"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/secured": {
+        "get": {
+          "summary": "Route that can only be accessed by logged-in users",
+          "responses": {
+            "200": {
+              "description": "JSON containing 200 status code if logged."
+            },
+            "401": {
+              "description": "Not logged in."
+            }
+          }
+        }
+      },
+      "/auth/login": {
+        "post": {
+          "summary": "Checks if the provided credentials are correct",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "JSON containing user data (without password)",
+              "headers": {
+                "Authorization": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Authorization cookie used to prove that user is logged"
+                }
+              }
+            },
+            "403": {
+              "description": "Invalid credentials sent."
+            }
+          }
+        }
+      },
+      "/auth/register": {
+        "post": {
+          "summary": "Creates a new User",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "JSON containing user data (without password)",
+              "headers": {
+                "Authorization": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Authorization cookie used to prove that user is logged"
+                }
+              }
+            },
+            "403": {
+              "description": "Invalid credentials sent."
+            }
+          }
+        }
+      },
+      "/auth/logout": {
+        "post": {
+          "summary": "Logs out a User",
+          "responses": {
+            "200": {
+              "description": "JSON containing 200 status code. | OK",
+              "headers": {
+                "Authorization": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Authorization cookie set to empty"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }

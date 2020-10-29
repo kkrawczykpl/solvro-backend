@@ -6,6 +6,8 @@ import { AddressInfo } from 'net';
 import mongoose from "mongoose";
 import { AuthController } from './auth/auth.controller';
 import cookieParser from 'cookie-parser';
+import swaggerUi from 'swagger-ui-express';
+import * as swaggerDocument from './swagger.json';
 
 class App {
     public app: express.Application;
@@ -39,6 +41,7 @@ class App {
     }
 
     private initRouter = () => {
+        this.app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
         const authController = new AuthController();
         const routes = new Routes();
         this.app.use("/", authController.router);
