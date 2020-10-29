@@ -25,10 +25,10 @@ Jest to projekt tworzony w ramach rekrutacji do Koła Naukowego Politechniki Wro
 
 **Live**
 
-_@Todo_
-Swagger:
+https://solvrobackend.herokuapp.com/
 
-_url_ : _port_/swagger
+Swagger:
+https://solvrobackend.herokuapp.com/swagger/
 
 **Instalacja**
 
