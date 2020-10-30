@@ -54,6 +54,17 @@ npm install
 * Wygeneruj mapę miasta używając [skryptu](https://github.com/Solvro/rekrutacja/blob/master/backend/city_generator.py) w ./src/utils
 * Uruchom `npm start`
 
+**Endpointy**
+
+* GET /
+* GET /ping
+* GET /stops
+* GET /path/{source}/{target}
+* GET /secured
+* POST /auth/login
+* POST /auth/register
+* POST /auth/logout
+
 **Informacje**
 
 Nie trzymałem się sztywno ustalonej specyfikacji intencjonalnie. Ponieważ kilka przystanków może mieć taką samą nazwę uważam, że powinna być zwracana taka informacja jak np. ID przystanku od którego/do którego zmierza użytkownik. Nie było słowa skąd mają pochodzić dane które mają być wczytywane jako mapa miasta, dlatego stwierdziłem że rozsądnym będzie zostawienie jej w pliku *.json, co ułatwiało też proces testowania. Tylko raz mi się zdarzyło wcześniej używać swaggera więc nie jestem do końca pewny czy ten podpunkt spełniłem tak jak powinienem. Wydaje mi się, że projekt da się jeszcze poprawić, ale minął czas który mogłem na niego poświęcić, więc zostawiam w wersji taka jaka jest i działa.
