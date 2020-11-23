@@ -28,10 +28,20 @@ class Graph {
         const stop2 = this.getStop(to);
         if(stop1 && stop2) {
             stop1.edges.push({
-                from: stop1,
-                to: stop2,
+                from: stop1.id,
+                to: stop2.id,
                 distance
             });
+
+            const edge = {
+                from: stop2.id,
+                to: stop1.id,
+                distance
+            };
+
+            if(stop2.edges.indexOf(edge) < 0) {
+                stop2.edges.push(edge);
+            }
             return true;
         }else{
             return false;

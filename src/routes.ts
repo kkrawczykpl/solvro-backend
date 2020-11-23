@@ -51,7 +51,11 @@ class Routes {
             try {
                 const pathService = new PathService();
                 const paths = await pathService.findPaths(source, target);
-                res.status(200).json(paths);
+                if(paths.length) {
+                    res.status(200).json(paths);
+                }else{
+                    res.status(400).json(statusCodes[400]);
+                }
             } catch (error) {
             res.send(404).json(statusCodes[404].json)
             }

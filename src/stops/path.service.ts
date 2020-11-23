@@ -5,6 +5,7 @@ import { StopsService } from './stops.service';
 import { Node } from '../utils/utils';
 import Stop from '../interfaces/stop';
 import { Searcher } from './searcher';
+import PathResponse from '../utils/pathResponse.interface';
 
 class PathService {
     stopsService: StopsService;
@@ -36,7 +37,7 @@ class PathService {
      * @param target - String - Target name
      * @returns Object with data about possible paths.
      */
-    async findPaths(source: string, target: string): Promise<object[]> {
+    async findPaths(source: string, target: string): Promise<PathResponse[]> {
         const possiblePaths = [];
         const sameSource: Node[] = await this.stopsService.findStopsByName(source);
         const sameTarget: Node[] = await this.stopsService.findStopsByName(target);
@@ -68,39 +69,44 @@ class PathService {
      * @param source - Number - ID of source stop
      * @param target - Number - ID of target stop
      */
-    async findShortestPath(source: number, target: number): Promise<object>{
+    async findShortestPath(source: number, target: number): Promise<PathResponse>{
         await this.initGraph();
         const sourceStop: Stop | undefined = this.graph.getStop(source);
         const targetStop: Stop | undefined = this.graph.getStop(target);
         if(sourceStop && targetStop) {
+            if(sourceStop === targetStop) {
+                return {
+                    status: false,
+                    from: sourceStop.id,
+                    to: targetStop.id,
+                    msg: "The same stop was chosen."
+                };
+            }
+            
             const searcher = new Searcher(this.graph);
             const result = searcher.findShortestWay(sourceStop, targetStop);
-            const path = searcher.findStopsOnPath(result.prev, sourceStop.id).pop();
-            const resultStops: object[] = path!.map(s => { const st = this.graph.getStop(s); return { "name": st?.name || "No name found", "id": st?.id } } );
+            const path = searcher.findStopsOnPath(result.prev, sourceStop.id, targetStop.id);
+            const resultStops: Pick<Stop, "name" | "id">[] = path!.map(s => { const st = this.graph.getStop(s); return { "name": st?.name || "No name found", "id": st!.id } } );
             if(result.dist === Infinity) {
                 return {
                     status: false,
                     from: sourceStop.id,
                     to: targetStop.id,
-                    msg: "No connection possible between providen stops",
-                    path: {
-                        stops: [],
-                    }
-                }
-            } else{
-                resultStops.shift();
+                    msg: "No connection possible between providen stops"
+                };
+            } else {
                 return {
                     status: true,
                     from: sourceStop.id,
                     to: targetStop.id,
                     path: {
                         distance: result.dist,
-                        stops: resultStops,
+                        stops: resultStops
                     }
-                }
+                };
             }
         }
-        return {status: false, msg: "An error occurred, no such stops were found"};
+        return {status: false, from: source, to: target, msg: "An error occurred, no such stops were found"};
     }
 }
 

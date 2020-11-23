@@ -1,7 +1,7 @@
 import Stop from "./stop";
 
 export default interface Edge {
-    from: Stop;
-    to: Stop;
+    from: number;
+    to: number;
     distance: number;
 }

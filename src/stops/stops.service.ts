@@ -25,8 +25,7 @@ class StopsService {
     async findAllNames(): Promise<object[]> {
         const nodes = await this.findAll();
         const stopNames = nodes.map(stop => { return {"name": stop.stop_name} });
-        const uniqueNames = [...new Map(stopNames.map(stop => [stop.name, stop])).values()];
-        return uniqueNames;
+        return stopNames;
     }
     /**
      * Find Stop name by id
