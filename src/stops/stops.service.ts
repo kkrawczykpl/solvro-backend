@@ -27,22 +27,24 @@ class StopsService {
         const stopNames = nodes.map(stop => { return {"name": stop.stop_name} });
         return stopNames;
     }
-    /**
-     * Find Stop name by id
-     *
-     * @param id - number
-     * @returns string if stop exists otherwise undefined.
-     */
-    async findStopNameById(id: number): Promise<string | undefined> {
-        const nodes = await this.findAll();
-        const stop = nodes.find(s => s.id === id);
-        return stop ? stop.stop_name : undefined;
-    }
 
-    async findStopsByName(name: string): Promise<Node[]> {
+    /**
+     * Find Stop By Id
+     * Checks if Node exists by given ID
+     * Returns
+     * @throws Error if couple nodes has same ID
+     * @returns Promise - Node element or undefined
+     */
+    async findStopById(id: number): Promise<Node | undefined> {
         const nodes: Node[] = await this.findAll();
-        const stops: Node[] = nodes.filter(s => s.stop_name === name);
-        return stops;
+        const stop: Node[] = nodes.filter(s => s.id === id);
+        if(stop.length === 1) {
+            return stop[0];
+        }else if(stop.length > 1) {
+            throw new Error("Invalid City file! The stops have an unavoidable ID. ID: " + id);
+        }else {
+            return undefined;
+        }
     }
 }
 

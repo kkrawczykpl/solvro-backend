@@ -45,19 +45,19 @@ class Routes {
          * @query target - Stop where the path ends
          * @returns JSON containing stops and total distance
          */
-        this.router.get('/path/:source/:target', async (req: Request, res: Response) => {
-            const source: string = req.params.source;
-            const target: string = req.params.target;
+        this.router.get('/path/:sourceId/:targetId', async (req: Request, res: Response) => {
+            const source: number = parseInt(req.params.sourceId, 10);
+            const target: number = parseInt(req.params.targetId, 10);
             try {
                 const pathService = new PathService();
-                const paths = await pathService.findPaths(source, target);
+                const paths = await pathService.findPath(source, target);
                 if(paths.length) {
                     res.status(200).json(paths);
                 }else{
                     res.status(400).json(statusCodes[400]);
                 }
             } catch (error) {
-            res.send(404).json(statusCodes[404].json)
+                res.send(404).json(statusCodes[404].json)
             }
         });
 

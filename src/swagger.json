@@ -53,27 +53,27 @@
           }
         }
       },
-      "/path/{source}/{target}": {
+      "/path/{sourceId}/{targetId}": {
         "get": {
           "summary": "Returns list of stops in path and total distance.",
           "parameters": [
             {
               "in": "path",
-              "name": "source",
+              "name": "sourceId",
               "required": true,
               "schema": {
-                "type": "string"
+                "type": "number"
               },
-              "description": "Stop where the path begins"
+              "description": "ID of stop where the path begins"
             },
             {
               "in": "path",
-              "name": "target",
+              "name": "targetId",
               "required": true,
               "schema": {
-                "type": "string"
+                "type": "number"
               },
-              "description": "Stop where the path ends"
+              "description": "ID of stop where the path ends"
             }
           ],
           "responses": {

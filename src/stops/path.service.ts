@@ -31,25 +31,20 @@ class PathService {
     }
 
     /**
-     * Find Paths between two stops, because two or more stops
-     * may have the same name.
-     * @param source - String - Path name
-     * @param target - String - Target name
+     * Find Path between two stops
+     * @param source - String - Source Stop ID
+     * @param target - String - Target Stop ID
      * @returns Object with data about possible paths.
      */
-    async findPaths(source: string, target: string): Promise<PathResponse[]> {
-        const possiblePaths = [];
-        const sameSource: Node[] = await this.stopsService.findStopsByName(source);
-        const sameTarget: Node[] = await this.stopsService.findStopsByName(target);
-        if(sameSource.length && sameTarget.length) {
-            for(const src of sameSource) {
-                for(const trg of sameTarget) {
-                    const path = await this.findShortestPath(src.id, trg.id);
-                    possiblePaths.push(path);
-                }
-            }
+    async findPath(source: number, target: number): Promise<PathResponse[]> {
+        const paths = [];
+        const sourceStop = await this.stopsService.findStopById(source);
+        const targetStop = await this.stopsService.findStopById(target);
+        if(sourceStop && targetStop) {
+            const path = await this.findShortestPath(source, target);
+            paths.push(path);
         }
-        return possiblePaths;
+        return paths;
     }
 
     /**
@@ -82,7 +77,7 @@ class PathService {
                     msg: "The same stop was chosen."
                 };
             }
-            
+
             const searcher = new Searcher(this.graph);
             const result = searcher.findShortestWay(sourceStop, targetStop);
             const path = searcher.findStopsOnPath(result.prev, sourceStop.id, targetStop.id);
