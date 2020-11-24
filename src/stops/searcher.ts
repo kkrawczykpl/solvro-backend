@@ -63,7 +63,7 @@ class Searcher {
     findStopsOnPath(prev: (number|undefined)[], source: number, target: number): number[] {
         const path: number[] = [];
         let currentStop: number = target;
-        if(prev[currentStop]) {
+        if(prev[currentStop] || prev[currentStop] === 0) {
             while(currentStop !== source) {
                 path.push(currentStop);
                 currentStop = prev[currentStop]!;
