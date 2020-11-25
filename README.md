@@ -67,7 +67,7 @@ npm install
 
 **Informacje**
 
-Nie trzymałem się sztywno ustalonej specyfikacji intencjonalnie. Ponieważ kilka przystanków może mieć taką samą nazwę uważam, że powinna być zwracana taka informacja jak np. ID przystanku od którego/do którego zmierza użytkownik. Nie było słowa skąd mają pochodzić dane które mają być wczytywane jako mapa miasta, dlatego stwierdziłem że rozsądnym będzie zostawienie jej w pliku *.json, co ułatwiało też proces testowania. Tylko raz mi się zdarzyło wcześniej używać swaggera więc nie jestem do końca pewny czy ten podpunkt spełniłem tak jak powinienem. Wydaje mi się, że projekt da się jeszcze poprawić, ale minął czas który mogłem na niego poświęcić, więc zostawiam w wersji taka jaka jest i działa.
+~~Nie trzymałem się sztywno ustalonej specyfikacji intencjonalnie. Ponieważ kilka przystanków może mieć taką samą nazwę uważam, że powinna być zwracana taka informacja jak np. ID przystanku od którego/do którego zmierza użytkownik.~~ W pierwotnej wersji źle zinterpretowałem zadanie. W specyfikacji podany typ parametrów source/target był to string, więc stwierdziłem, że trasa powinna być szukana w oparciu o nazwę przystanków. Po konsultacji jednak okazało się, ze jest to błąd i trasa powinna być szukana wg. ID przystanków. Nie było słowa skąd mają pochodzić dane które mają być wczytywane jako mapa miasta, dlatego stwierdziłem że rozsądnym będzie zostawienie jej w pliku *.json, co ułatwiało też proces testowania.
 
 
 **Technologies**
