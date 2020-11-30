@@ -1,4 +1,4 @@
-# Solvro Backend (WIP)
+# Solvro Backend
 
 Jest to projekt tworzony w ramach rekrutacji do Koła Naukowego Politechniki Wrocławskiej **Solvro**
 
